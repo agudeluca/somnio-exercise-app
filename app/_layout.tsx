@@ -14,7 +14,6 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import queryClientInstance from "@/hooks/queries"
 import { UserProvider } from "@/context/UserProvider"
 
-
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -22,9 +21,7 @@ export default function RootLayout() {
   const queryClient = queryClientInstance()
 
   const [loaded] = useFonts({
-    OpenSans: require("../assets/fonts/OpenSans.ttf"),
-    'SpaceMono-Regular': require("../assets/fonts/SpaceMono-Regular.ttf"),
-    Montserrat: require("../assets/fonts/Montserrat.ttf"),
+    Montserrat: require("../assets/fonts/Montserrat.ttf")
   })
 
   useEffect(() => {
