@@ -1,37 +1,28 @@
-import React from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
-import { useScrollStore } from "@/store/useScrollStore";
+import React from "react"
+import { FlatList } from "react-native"
+import { useScrollStore } from "@/store/useScrollStore"
+import useGetPost from "@/hooks/queries/useGetPosts"
 
-const data = Array(30)
-  .fill(null)
-  .map((_, i) => ({ id: String(i), name: `Item ${i + 1}` }));
+import renderItem from "./item"
+import { useUser } from '@/context/UserProvider'
 
-export default function Screen1() {
-  const handleScroll = useScrollStore((state) => state.handleScroll); // Access handleScroll
-
+export default function Posts() {
+  const handleScroll = useScrollStore((state) => state.handleScroll)
+  const { data } = useGetPost()
+ const { userId } = useUser()
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <View style={styles.item}>
-          <Text>{item.name}</Text>
-        </View>
-      )}
-      onScroll={(e) => handleScroll(e.nativeEvent.contentOffset.y)} // Call handleScroll
+      keyExtractor={(item) => String(item.id)}
+      renderItem={({ item }) => renderItem({ item, userId })}
+      onScroll={(e) => handleScroll(e.nativeEvent.contentOffset.y)}
+      extraData={{
+        test: "test"
+      }}
       scrollEventThrottle={16}
       contentContainerStyle={{
-        paddingTop: 150, // Space for header (100) + TabBar (50)
+        paddingTop: 150
       }}
     />
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  item: {
-    padding: 20,
-    backgroundColor: "lightgray",
-    marginBottom: 10,
-    borderRadius: 10,
-  },
-});

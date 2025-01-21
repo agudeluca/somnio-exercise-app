@@ -9,13 +9,16 @@ export const useScrollStore = create(() => {
   return {
     scrollY: 0, // Regular scroll position
     top, // SharedValue for header position
-    handleScroll: (y) => {
+    handleScroll: (y: number) => {
       const scrollingDown = y > top.value;
 
       // Update SharedValue
       top.value = scrollingDown && y > 50
-        ? withSpring(-100, { damping: 16 }) // Hide header
+        ? withSpring(-80, { damping: 16 }) // Hide header
         : withSpring(0, { damping: 16 });  // Show header
     },
+    resetHeaderPosition: () => {
+      top.value = withSpring(0, { damping: 16 });
+    }
   };
 });
