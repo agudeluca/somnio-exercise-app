@@ -4,6 +4,12 @@ This is a React Native project created using [Expo](https://expo.dev). It implem
 
 ---
 
+<p align="center">
+  <img src="assets/images/Simulator Screenshot - iPhone 15 - 2025-01-21 at 15.03.36.png" alt="Screenshot 1" width="20%" />
+  <img src="assets/images/Simulator Screenshot - iPhone 15 - 2025-01-21 at 15.04.13.png" alt="Screenshot 2" width="20%" />
+  <img src="assets/images/Simulator Screenshot - iPhone 15 - 2025-01-21 at 15.04.19.png" alt="Screenshot 3" width="20%" />
+  <img src="assets/images/Simulator Screenshot - iPhone 15 - 2025-01-21 at 15.04.24.png" alt="Screenshot 4" width="20%" />
+</p>
 ## 🚀 Get Started
 
 Follow these steps to set up and run the project locally:
@@ -81,7 +87,6 @@ npm test
 
 ---
 
-
 ## 📬 Contact
 
 Feel free to reach out to me:
@@ -95,3 +100,8 @@ Feel free to reach out to me:
 
 This project is licensed under the MIT License.
 
+
+## TODO
+
+- add swipe animation
+- add theme support

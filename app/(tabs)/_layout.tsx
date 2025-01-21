@@ -1,20 +1,17 @@
 import React from "react"
-import { Text, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { Tabs, TabList, TabTrigger, TabSlot } from "expo-router/ui"
 import { usePathname } from "expo-router"
 import Header from "@/components/Header"
 import { useScrollStore } from "@/store/useScrollStore"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+
 import { Colors } from "@/constants/Colors"
-import { Ionicons } from "@expo/vector-icons"
 import { ThemedText } from "@/components/ThemedText"
 
 const SelectableTab = ({
   name,
-  isSelected,
-  icon
+  isSelected
 }: {
-  icon: "list" | "home"
   name: string
   isSelected: boolean
 }) => {
@@ -28,11 +25,10 @@ const SelectableTab = ({
             backgroundColor: "white",
             borderRadius: 2,
             top: -5,
-            position: "absolute",
+            position: "absolute"
           }}
         />
       )}
-      <Ionicons name={icon} size={30} color="white" />
       <ThemedText style={styles.bottonTabText}>{name}</ThemedText>
     </View>
   )
@@ -42,35 +38,31 @@ export default function Layout() {
   const resetHeaderPosition = useScrollStore(
     (state) => state.resetHeaderPosition
   )
-  const pathname = usePathname() // Returns an array of route segments
-  const insets = useSafeAreaInsets()
+  const pathname = usePathname()
+
   const handleResetHeaderPosition = (clickedPath: string) => {
     if (clickedPath === pathname) return
     resetHeaderPosition()
   }
   return (
-    <>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: Colors.light.tint
+      }}
+    >
       <Header />
       <Tabs>
-        <TabSlot />
-        <TabList
-          style={[
-            styles.tabList,
-            {
-              height: insets.bottom + 55
-            }
-          ]}
-        >
+        <TabList style={styles.tabList}>
           <TabTrigger
+            style={{
+              backgroundColor: Colors.light.tint
+            }}
             onPress={() => handleResetHeaderPosition("/")}
             name="home"
             href="/"
           >
-            <SelectableTab
-              name="Posts"
-              isSelected={pathname === "/"}
-              icon="list"
-            />
+            <SelectableTab name="Posts" isSelected={pathname === "/"} />
           </TabTrigger>
           <TabTrigger
             onPress={() => handleResetHeaderPosition("/your-posts")}
@@ -80,12 +72,12 @@ export default function Layout() {
             <SelectableTab
               name="Your Posts"
               isSelected={pathname === "/your-posts"}
-              icon="home"
             />
           </TabTrigger>
         </TabList>
+        <TabSlot />
       </Tabs>
-    </>
+    </View>
   )
 }
 
@@ -98,7 +90,7 @@ const styles = StyleSheet.create({
   },
   bottonTabText: {
     color: "white",
-    fontSize: 12
+    fontSize: 14
   },
   bottomTabContainer: {
     alignItems: "center"

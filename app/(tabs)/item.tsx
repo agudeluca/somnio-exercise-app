@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native"
 
 import { ThemedText } from "@/components/ThemedText"
 import { Post } from "@/types"
+import { Colors } from "@/constants/Colors"
 
 const renderItem = ({ item, userId }: { item: Post; userId?: number }) => {
   return (
@@ -20,7 +21,9 @@ const renderItem = ({ item, userId }: { item: Post; userId?: number }) => {
       <ThemedText style={styles.title}>{item.title}</ThemedText>
       <ThemedText style={styles.subtitle}>{item.body}</ThemedText>
 
-      <ThemedText type="link">Read More ---→</ThemedText>
+      <ThemedText onPress={() => {}} type="link">
+        Read More ---→
+      </ThemedText>
     </View>
   )
 }
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
   },
   tag: {
     color: "#fff",
-    backgroundColor: "#241e81",
+    backgroundColor: Colors.light.secondary,
     marginBottom: 10,
     padding: 2,
     paddingHorizontal: 10,

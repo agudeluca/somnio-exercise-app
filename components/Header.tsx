@@ -1,64 +1,67 @@
 import React from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, Text } from "react-native"
 import Animated, { useAnimatedStyle } from "react-native-reanimated"
 
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useScrollStore } from "@/store/useScrollStore"
-import { usePathname } from 'expo-router'
+import { usePathname } from "expo-router"
+import { Colors } from "@/constants/Colors"
 
 const AnimatedHeader = () => {
   const top = useScrollStore((state) => state.top)
   const pathname = usePathname()
-  const headerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: top.value }]
-  }))
   const insets = useSafeAreaInsets()
+
+  // Animated styles for height and opacity
+  const headerStyle = useAnimatedStyle(() => {
+    const translateY = Math.max(top.value, -80) // Adjust threshold for hiding
+    const height = Math.max(80 + insets.top + translateY, 0) // Reduce height to 0
+    return {
+      transform: [{ translateY }],
+      height // Dynamically adjust height
+    }
+  })
+
   const textStyle = useAnimatedStyle(() => {
-    // Fade out the text when the header moves up
-    const opacity = 1 - Math.min(Math.abs(top.value) / 50, 1) // Adjust threshold (50) as needed
+    const opacity = 1 - Math.min(Math.abs(top.value) / 80, 1) // Adjust opacity
     return { opacity }
   })
 
   return (
-    <Animated.View
-      style={[
-        styles.header,
-        headerStyle,
-        {
-          paddingTop: 10 + insets.top,
-          height: 80 + insets.top
-        }
-      ]}
-    >
-      <Animated.Text style={[textStyle, styles.headerTitle]}>
-        {
-          pathname === "/" ? "Blog" : "Your Posts"
-        }
-      </Animated.Text>
-      <Animated.Text style={[textStyle, styles.headerSubTitle]}>Available Posts</Animated.Text>
+    <Animated.View style={[styles.header, headerStyle]}>
+      <Text
+        style={[
+          styles.headerTitle,
+          {
+            marginTop: insets.top
+          }
+        ]}
+      >
+        {pathname === "/" ? "Blog" : "Your Posts"}
+      </Text>
+      <Text style={[textStyle, styles.headerSubTitle]}>Available Posts</Text>
     </Animated.View>
   )
 }
 
 const styles = StyleSheet.create({
   header: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    height: 100,
-    backgroundColor: "white",
-    padding: 20,
-    zIndex: 10
+    paddingHorizontal: 20,
+    overflow: "hidden",
+    alignContent: "flex-end",
+    backgroundColor: Colors.light.tint
   },
   headerTitle: {
     fontSize: 25,
     marginBottom: 5,
+    color: "white",
     fontWeight: "bold",
     fontFamily: "Montserrat"
   },
   headerSubTitle: {
     fontSize: 15,
-    color: "gray",
+
+    color: "white",
     fontFamily: "Montserrat"
   }
 })
